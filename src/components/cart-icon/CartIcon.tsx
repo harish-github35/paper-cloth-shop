@@ -2,9 +2,10 @@ import useCartContext from "../../hooks/useCartContext";
 import { Cart_icon_container, Shopping_icon, Item_count } from "./styles";
 
 const CartIcon = () => {
-  const { cartCount, isCartOpen, setIsCartOpen } = useCartContext();
+  const { cartCount, isCartOpen, dispatch } = useCartContext();
 
-  const toggleOpen = () => setIsCartOpen(!isCartOpen);
+  const toggleOpen = () =>
+    dispatch({ type: "SET_CART_OPEN", payload: !isCartOpen });
 
   return (
     <Cart_icon_container onClick={toggleOpen}>

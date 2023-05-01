@@ -5,7 +5,7 @@ import CartItem from "../cart-item/CartItem";
 import { Cart_dropdown_container, Empty_message, Cart_items } from "./styles";
 
 const CartDropdown = () => {
-  const { cartItems, setIsCartOpen } = useCartContext();
+  const { cartItems, dispatch } = useCartContext();
   const navigate = useNavigate();
 
   return (
@@ -22,7 +22,7 @@ const CartDropdown = () => {
       <Button
         onClick={() => {
           navigate("/checkout");
-          setIsCartOpen(false);
+          dispatch({ type: "SET_CART_OPEN", payload: false });
         }}
       >
         GO TO CHECKCOUT

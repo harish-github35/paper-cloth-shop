@@ -8,12 +8,15 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
-  const { addItemToCart } = useCartContext();
+  const { dispatch } = useCartContext();
 
   const { name, price, imageUrl } = product;
 
-  const handleAddToCart = () => {
-    addItemToCart(product);
+  const addToCart = () => {
+    dispatch({
+      type: "ADD_ITEM",
+      payload: product,
+    });
   };
 
   return (
@@ -23,7 +26,7 @@ const ProductCard = ({ product }: Props) => {
         <span className="name">{name}</span>
         <span className="price">{price}</span>
       </Footer>
-      <Button onClick={handleAddToCart} buttonType="inverted">
+      <Button onClick={addToCart} buttonType="inverted">
         Add to cart
       </Button>
     </Product_card_container>

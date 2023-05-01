@@ -3,8 +3,7 @@ import useCartContext from "../../hooks/useCartContext";
 import { Checkout_container, Checkout_header, Total } from "./styles";
 
 const CheckOut = () => {
-  const { total, cartItems, addItemToCart, decreaseItem, removeItem } =
-    useCartContext();
+  const { total, cartItems, dispatch } = useCartContext();
 
   return (
     <Checkout_container>
@@ -23,13 +22,28 @@ const CheckOut = () => {
         </div>
       </Checkout_header>
 
-      {cartItems.map((c) => (
+      {cartItems.map((item) => (
         <CheckoutItem
-          key={c.id}
-          item={c}
-          onRemove={() => removeItem(c)}
-          onDecrement={() => decreaseItem(c)}
-          onIncrement={() => addItemToCart(c)}
+          key={item.id}
+          item={item}
+          onRemove={() =>
+            dispatch({
+              type: "REMOVE_ITEM",
+              payload: item.id,
+            })
+          }
+          onDecrement={() =>
+            dispatch({
+              type: "DECREASE_ITEM",
+              payload: item,
+            })
+          }
+          onIncrement={() =>
+            dispatch({
+              type: "ADD_ITEM",
+              payload: item,
+            })
+          }
         />
       ))}
       <Total>Total: {total}</Total>
