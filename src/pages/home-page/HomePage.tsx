@@ -1,11 +1,13 @@
-import json from "../../data/categories.json";
 import { Category } from "../../Types";
 import HomeCategoryItem from "../../components/home-category-item/HomeCategoryItem";
+import json from "../../data/categories.json";
 
 import { Home_categories_container } from "./styles";
 
 const HomePage = () => {
   // const [data, setData] = useState<Category[] | null>(null);
+
+  // trying to lazy load json is a mistake
 
   // useEffect(() => {
   //   const h = async () => {

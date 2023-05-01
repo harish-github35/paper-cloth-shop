@@ -1,9 +1,13 @@
 import CheckoutItem from "../../components/checkout-item/CheckoutItem";
-import useCartContext from "../../hooks/useCartContext";
+import { addItem, decreaseItem, removeItem } from "../../redux/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/useRedux";
+import { cartTotalSelector } from "../../utils/cart";
 import { Checkout_container, Checkout_header, Total } from "./styles";
 
 const CheckOut = () => {
-  const { total, cartItems, dispatch } = useCartContext();
+  const dispatch = useAppDispatch();
+  const total = useAppSelector(cartTotalSelector);
+  const cartItems = useAppSelector((s) => s.cart.cartItems);
 
   return (
     <Checkout_container>
@@ -26,24 +30,9 @@ const CheckOut = () => {
         <CheckoutItem
           key={item.id}
           item={item}
-          onRemove={() =>
-            dispatch({
-              type: "REMOVE_ITEM",
-              payload: item.id,
-            })
-          }
-          onDecrement={() =>
-            dispatch({
-              type: "DECREASE_ITEM",
-              payload: item,
-            })
-          }
-          onIncrement={() =>
-            dispatch({
-              type: "ADD_ITEM",
-              payload: item,
-            })
-          }
+          onRemove={() => dispatch(removeItem(item.id))}
+          onDecrement={() => dispatch(decreaseItem(item.id))}
+          onIncrement={() => dispatch(addItem(item))}
         />
       ))}
       <Total>Total: {total}</Total>

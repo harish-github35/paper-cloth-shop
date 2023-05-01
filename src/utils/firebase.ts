@@ -1,27 +1,27 @@
-import { User } from "firebase/auth";
+import { UserInfo } from "firebase/auth";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import {
-  getAuth,
-  signInWithRedirect,
-  signInWithPopup,
-  signOut,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  getAuth,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
+  signOut,
 } from "firebase/auth";
 import {
-  getFirestore,
-  doc, // get doc
-  getDoc, // get data from doc
-  setDoc, // set data to doc
   collection,
-  writeBatch,
-  query,
+  doc,
+  getDoc,
   getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  writeBatch,
 } from "firebase/firestore";
 import { Categories, Product } from "../Types";
 
@@ -54,7 +54,7 @@ export const signInWithGoogleRedirect = () =>
 export const signOutUser = () => signOut(auth);
 
 export const onAuthStateChangedListener = (
-  callback: (user: User | null) => void
+  callback: (user: UserInfo | null) => void
 ) => onAuthStateChanged(auth, callback);
 
 export const db = getFirestore();
@@ -88,7 +88,7 @@ export const getCategoriesAndDocuments = async () => {
 };
 
 export const createUserDocWithFromAuth = async (
-  userAuth: User,
+  userAuth: UserInfo,
   additionlaUserInfo: object = {}
 ) => {
   if (!userAuth) return;

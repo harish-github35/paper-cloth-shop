@@ -1,17 +1,17 @@
 import { useParams } from "react-router-dom";
 
+import { useEffect } from "react";
 import ProductCard from "../../components/product-card/ProductCard";
-import useCategoiresContext from "../../hooks/useCategoriesContext";
+import { useAppSelector } from "../../redux/useRedux";
 import {
   Gotoshoplink,
   Shopcategorycontainer,
   Shopcategoryproductsgrid,
 } from "./styles";
-import { useEffect } from "react";
 
 const ShopCategoryPage = () => {
   const { slug } = useParams();
-  const { categoriesMap, isLoading } = useCategoiresContext();
+  const { categoriesMap, isLoading } = useAppSelector((s) => s.shopData);
 
   useEffect(() => {
     window.scrollTo(0, 0);

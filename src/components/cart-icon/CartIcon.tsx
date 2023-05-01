@@ -1,11 +1,13 @@
-import useCartContext from "../../hooks/useCartContext";
-import { Cart_icon_container, Shopping_icon, Item_count } from "./styles";
+import { setisCartOpen } from "../../redux/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/useRedux";
+import { cartItemQuantitySelector } from "../../utils/cart";
+import { Cart_icon_container, Item_count, Shopping_icon } from "./styles";
 
 const CartIcon = () => {
-  const { cartCount, isCartOpen, dispatch } = useCartContext();
+  const dispatch = useAppDispatch();
+  const cartCount = useAppSelector(cartItemQuantitySelector);
 
-  const toggleOpen = () =>
-    dispatch({ type: "SET_CART_OPEN", payload: !isCartOpen });
+  const toggleOpen = () => dispatch(setisCartOpen());
 
   return (
     <Cart_icon_container onClick={toggleOpen}>

@@ -1,13 +1,13 @@
-import { useState, ChangeEvent } from "react";
+import { FirebaseError } from "firebase/app";
+import { ChangeEvent, useState } from "react";
 import {
   createUserDocWithFromAuth,
   signInUserWithEmailPassword,
   signInWithGooglePopup,
 } from "../../utils/firebase";
-import { FirebaseError } from "firebase/app";
-import FormInput from "../form-input/FormInput";
 import Button from "../button/Button";
-import { Sign_in_container, Buttons_container } from "./styles";
+import FormInput from "../form-input/FormInput";
+import { Buttons_container, Sign_in_container } from "./styles";
 
 const defaultValues = {
   email: "",

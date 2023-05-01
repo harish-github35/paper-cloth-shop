@@ -1,22 +1,20 @@
 import { Product } from "../../Types";
+import { addItem } from "../../redux/cartSlice";
+import { useAppDispatch } from "../../redux/useRedux";
 import Button from "../button/Button";
-import useCartContext from "../../hooks/useCartContext";
-import { Product_card_container, Footer } from "./styles";
+import { Footer, Product_card_container } from "./styles";
 
 interface Props {
   product: Product;
 }
 
 const ProductCard = ({ product }: Props) => {
-  const { dispatch } = useCartContext();
+  const dispatch = useAppDispatch();
 
   const { name, price, imageUrl } = product;
 
   const addToCart = () => {
-    dispatch({
-      type: "ADD_ITEM",
-      payload: product,
-    });
+    dispatch(addItem(product));
   };
 
   return (
