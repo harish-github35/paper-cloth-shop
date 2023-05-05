@@ -4,7 +4,7 @@ const Google_btn = css`
   background-color: #4285f4;
   color: white;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: #357ae8;
     border: none;
   }
@@ -15,7 +15,7 @@ const Inverted_btn = css`
   color: black;
   border: 1px solid black;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: black;
     color: white;
     border: none;
@@ -43,7 +43,7 @@ export const StyledBtn = styled.button<Props>`
   border: none;
   cursor: pointer;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: white;
     color: black;
     border: 1px solid black;
@@ -56,4 +56,11 @@ export const StyledBtn = styled.button<Props>`
       ? Inverted_btn
       : "";
   }}
+
+  &:disabled {
+    background-color: grey;
+    color: #000;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 `;

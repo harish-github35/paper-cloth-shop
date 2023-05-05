@@ -1,8 +1,8 @@
+import { useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
-
-import { useEffect } from "react";
 import ProductCard from "../../components/product-card/ProductCard";
 import { useAppSelector } from "../../redux/useRedux";
+import { productsSelector } from "../../utils/selector";
 import {
   Gotoshoplink,
   Shopcategorycontainer,
@@ -11,15 +11,16 @@ import {
 
 const ShopCategoryPage = () => {
   const { slug } = useParams();
-  const { categoriesMap, isLoading } = useAppSelector((s) => s.shopData);
+  const products = useAppSelector(productsSelector(slug!));
+  const isLoading = useAppSelector((s) => s.shopData.isLoading);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [slug]);
 
   if (isLoading) return <p>loading..</p>;
 
-  if (slug && categoriesMap && !Object.keys(categoriesMap).includes(slug)) {
+  if (slug && !products) {
     return (
       <>
         <h1>Oops!</h1>
@@ -29,13 +30,11 @@ const ShopCategoryPage = () => {
     );
   }
 
-  const categoryProducts = categoriesMap && categoriesMap[slug!];
-
   return (
     <Shopcategorycontainer>
       <h2>{slug?.toUpperCase()}</h2>
       <Shopcategoryproductsgrid>
-        {categoryProducts?.map((product) => (
+        {products?.map((product) => (
           <ProductCard product={product} key={product.id} />
         ))}
       </Shopcategoryproductsgrid>

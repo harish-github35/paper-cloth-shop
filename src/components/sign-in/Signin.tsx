@@ -1,5 +1,6 @@
 import { FirebaseError } from "firebase/app";
 import { ChangeEvent, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   createUserDocWithFromAuth,
   signInUserWithEmailPassword,
@@ -13,7 +14,11 @@ const defaultValues = {
   email: "",
   password: "",
 };
+
 const Signin = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as any;
   const [inputs, setInputs] = useState(defaultValues);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,6 +36,11 @@ const Signin = () => {
   const signinWithGoogle = async () => {
     const { user } = await signInWithGooglePopup();
     await createUserDocWithFromAuth(user);
+    if (state) {
+      navigate(state.next, { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
   };
 
   const handleSubmit = async () => {
@@ -38,12 +48,12 @@ const Signin = () => {
       try {
         await signInUserWithEmailPassword(email, password);
         resetForm();
+        navigate(-1);
       } catch (e) {
         if (e instanceof FirebaseError) {
           setError(e.code.slice(5).replace("-", " "));
-        }
-        if (e instanceof Error) {
-          setError(e.message);
+        } else {
+          setError((e as Error).message);
         }
       }
     }
@@ -53,7 +63,6 @@ const Signin = () => {
     <Sign_in_container>
       <h2>Already have an Account</h2>
       <span>Sign in with your email and password</span>
-      {error && <p>{error}</p>}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -75,6 +84,7 @@ const Signin = () => {
           type="password"
           name="password"
         />
+        {error && <p className="error-text">{error}</p>}
         <Buttons_container>
           <Button options={{ type: "submit" }}>Sign In</Button>
           <Button

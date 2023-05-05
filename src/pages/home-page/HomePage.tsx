@@ -1,4 +1,3 @@
-import { Category } from "../../Types";
 import HomeCategoryItem from "../../components/home-category-item/HomeCategoryItem";
 import json from "../../data/categories.json";
 
@@ -17,7 +16,11 @@ const HomePage = () => {
   //   h();
   // }, []);
 
-  const data = json as Category[];
+  const data = json as {
+    id: number;
+    title: string;
+    imageUrl: string;
+  }[];
 
   return (
     <Home_categories_container>

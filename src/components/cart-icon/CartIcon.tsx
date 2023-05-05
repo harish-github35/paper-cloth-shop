@@ -1,6 +1,6 @@
 import { setisCartOpen } from "../../redux/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/useRedux";
-import { cartItemQuantitySelector } from "../../utils/cart";
+import { cartItemQuantitySelector } from "../../utils/selector";
 import { Cart_icon_container, Item_count, Shopping_icon } from "./styles";
 
 const CartIcon = () => {

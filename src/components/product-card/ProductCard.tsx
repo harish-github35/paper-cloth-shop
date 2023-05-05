@@ -19,7 +19,7 @@ const ProductCard = ({ product }: Props) => {
 
   return (
     <Product_card_container>
-      <img src={imageUrl} alt={name} />
+      <img loading="lazy" src={imageUrl} alt={name} />
       <Footer>
         <span className="name">{name}</span>
         <span className="price">{price}</span>

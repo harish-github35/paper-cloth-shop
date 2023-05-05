@@ -1,6 +1,6 @@
-import { Categories } from "../Types";
+import { Category } from "../Types";
 
-export const SHOP_DATA: Categories[] = [
+export const SHOP_DATA: Category[] = [
   {
     title: "Hats",
     items: [

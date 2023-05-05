@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import CategoryPreview from "../../components/category-preview/CategoryPreview";
 import { useAppSelector } from "../../redux/useRedux";
+import { categoryMapSelector } from "../../utils/selector";
 
 const Shop_category_preview_container = styled.main`
   max-width: 1100px;
@@ -9,7 +10,8 @@ const Shop_category_preview_container = styled.main`
 `;
 
 const ShopCategoryPreviewPage = () => {
-  const { categoriesMap, isLoading } = useAppSelector((s) => s.shopData);
+  const categoriesMap = useAppSelector(categoryMapSelector);
+  const isLoading = useAppSelector((s) => s.shopData.isLoading);
 
   if (isLoading) return <p>loading..</p>;
 

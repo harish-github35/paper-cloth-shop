@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Category } from "../../Types";
 import {
   Background_image,
   Category_body_container,
@@ -7,7 +6,11 @@ import {
 } from "./styles";
 
 interface Props {
-  category: Category;
+  category: {
+    id: number;
+    title: string;
+    imageUrl: string;
+  };
 }
 
 const HomeCategoryItem = ({ category }: Props) => {

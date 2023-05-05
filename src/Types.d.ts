@@ -1,8 +1,4 @@
-export interface Category {
-  id: number;
-  title: string;
-  imageUrl: string;
-}
+import { UserInfo } from "firebase/auth";
 
 export interface Product {
   id: number;
@@ -15,7 +11,12 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
-export interface Categories {
+export interface Category {
   title: string;
   items: Product[];
+}
+
+export interface UserType extends UserInfo {
+  displayName: string;
+  email: string;
 }

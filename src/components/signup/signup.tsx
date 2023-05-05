@@ -1,5 +1,6 @@
 import { FirebaseError } from "firebase/app";
 import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   createNewUserWithEmailPassword,
   createUserDocWithFromAuth,
@@ -14,6 +15,7 @@ const defaultValues = {
   password: "",
 };
 const Signup = () => {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState(defaultValues);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,12 +36,12 @@ const Signup = () => {
         const { user } = await createNewUserWithEmailPassword(email, password);
         await createUserDocWithFromAuth(user, { displayName });
         resetForm();
+        navigate("/shop", { replace: true });
       } catch (e) {
         if (e instanceof FirebaseError) {
-          setError(e.code.slice(4));
-        }
-        if (e instanceof Error) {
-          setError(e.message);
+          setError(e.code.slice(5).replace("-", " "));
+        } else {
+          setError((e as Error).message);
         }
       }
     }
@@ -49,7 +51,6 @@ const Signup = () => {
     <Sign_up_container>
       <h2>Create Account</h2>
       <span>Sign up with your email and password</span>
-      {error && <p>{error}</p>}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -79,6 +80,7 @@ const Signup = () => {
           type="password"
           name="password"
         />
+        {error && <p className="error-text">{error}</p>}
         <Button options={{ type: "submit" }}>Sign Up</Button>
       </form>
     </Sign_up_container>

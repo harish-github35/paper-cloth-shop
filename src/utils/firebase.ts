@@ -23,7 +23,7 @@ import {
   setDoc,
   writeBatch,
 } from "firebase/firestore";
-import { Categories, Product } from "../Types";
+import { Category, UserType } from "../Types";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -61,7 +61,7 @@ export const db = getFirestore();
 
 export const addCollectionAndDocs = async (
   collectionName: string,
-  ObjectToAdd: Categories[]
+  ObjectToAdd: Category[]
 ) => {
   const collectionRef = collection(db, collectionName);
 
@@ -78,13 +78,17 @@ export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, "categories");
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((a, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    a[title.toLowerCase()] = items;
-    return a;
-  }, {} as Record<string, Product[]>);
+  return querySnapshot.docs.map((docSnapshot) =>
+    docSnapshot.data()
+  ) as Category[];
 
-  return categoryMap;
+  // const categoryMap = querySnapshot.docs.reduce((a, docSnapshot) => {
+  //   const { title, items } = docSnapshot.data();
+  //   a[title.toLowerCase()] = items;
+  //   return a;
+  // }, {} as Record<string, Product[]>);
+
+  // return categoryMap;
 };
 
 export const createUserDocWithFromAuth = async (
@@ -130,4 +134,14 @@ export const signInUserWithEmailPassword = async (
   password: string
 ) => {
   return signInWithEmailAndPassword(auth, email, password);
+};
+
+export const getCurrentUserDoc = async (userid: string) => {
+  const userDocRef = doc(db, "users", userid);
+  const userSnapshot = await getDoc(userDocRef);
+  if (userSnapshot.exists()) {
+    return userSnapshot.data() as UserType;
+  }
+
+  return null;
 };

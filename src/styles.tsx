@@ -26,4 +26,9 @@ body {
   padding: 20px 40px;
 }
 
+.error-text {
+  color: red;
+  padding: 10px 0;
+}
+
 `;

@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Product } from "../Types";
+import { Category } from "../Types";
 
 interface CategoriesState {
-  categoriesMap: Record<string, Product[]> | null;
+  categories: Category[];
   isLoading: boolean;
 }
 
 const initialState: CategoriesState = {
-  categoriesMap: null,
+  categories: [],
   isLoading: false,
 };
 
@@ -15,8 +15,8 @@ const categoriesSlice = createSlice({
   name: "categories",
   initialState,
   reducers: {
-    setCategories(state, action: PayloadAction<Record<string, Product[]>>) {
-      state.categoriesMap = action.payload;
+    setCategories(state, action: PayloadAction<Category[]>) {
+      state.categories = action.payload;
     },
     setisLoading(state) {
       state.isLoading = !state.isLoading;

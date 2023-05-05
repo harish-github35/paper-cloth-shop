@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PURGE } from "redux-persist";
 import { CartItem, Product } from "../Types";
 
 interface CartState {
@@ -38,6 +39,11 @@ const cartSlice = createSlice({
     setisCartOpen(state) {
       state.isCartOpen = !state.isCartOpen;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, () => {
+      return initialState;
+    });
   },
 });
 
